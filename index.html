@@ -110,9 +110,16 @@ body{background:var(--bg);color:var(--t1);font-family:'Segoe UI',sans-serif;min-
 
 <div class="hdr">
   <div class="hdr-icon">📝</div>
-  <div>
+  <div style="flex:1">
     <h1>PYQ Test Series</h1>
-    <p>SSC CGL • CHSL • GD • Bihar Police</p>
+    <p>SSC • RRB • Bihar Police</p>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+    <div style="font-size:.55rem;color:rgba(255,255,255,.7)">Language</div>
+    <div style="display:flex;background:rgba(0,0,0,.3);border-radius:8px;overflow:hidden">
+      <button id="lang-en" onclick="setLang('en')" style="border:none;padding:5px 10px;font-size:.65rem;font-weight:800;cursor:pointer;background:rgba(255,255,255,.9);color:#333">EN</button>
+      <button id="lang-hi" onclick="setLang('hi')" style="border:none;padding:5px 10px;font-size:.65rem;font-weight:800;cursor:pointer;background:transparent;color:rgba(255,255,255,.7)">हि</button>
+    </div>
   </div>
 </div>
 
@@ -206,10 +213,67 @@ var EXAMS = {
       {name:'करेंट अफेयर्स', q:3, color:'#fb923c', topics:'Current Events India World, Sports, Awards 2024-25'}
     ],
     years:[2024,2023,2022,2021,2019,2017,2014]
+  },
+  'RRB NTPC UG': {
+    icon:'🚆', color:'#38bdf8', qs:100, mins:90, neg:true, negVal:0.33, marks:1,
+    sections:[
+      {name:'General Awareness', q:40, color:'#4ade80', topics:'History, Geography, Polity, Economy, Science, Current Affairs, Sports, Awards, Railways GK, Static GK'},
+      {name:'Mathematics', q:30, color:'#fbbf24', topics:'Number System, Decimals, Fractions, LCM HCF, Ratio, Percentage, Mensuration, Time Work, Time Speed Distance, Simple Compound Interest, Profit Loss, Algebra, Geometry, Trigonometry, Statistics'},
+      {name:'General Intelligence & Reasoning', q:30, color:'#7c6fff', topics:'Analogies, Completion of Number Series, Coding Decoding, Mathematical Operations, Similarities Differences, Analytical Reasoning, Classification, Directions, Blood Relations, Syllogism'}
+    ],
+    years:[2024,2022,2021,2019,2016]
+  },
+  'RRB NTPC 12th': {
+    icon:'🚉', color:'#818cf8', qs:100, mins:90, neg:true, negVal:0.33, marks:1,
+    sections:[
+      {name:'General Awareness', q:40, color:'#4ade80', topics:'History, Geography, Polity, Economy, Science, Current Affairs, Sports, Awards, Railway GK, Culture, Static GK'},
+      {name:'Mathematics', q:30, color:'#fbbf24', topics:'Number System, Percentage, Ratio Proportion, SI CI, Profit Loss, Time Work, Speed Distance, Mensuration, Algebra, Geometry, Trigonometry, Statistics, DI'},
+      {name:'General Intelligence & Reasoning', q:30, color:'#7c6fff', topics:'Analogy, Series, Coding Decoding, Blood Relation, Direction, Syllogism, Venn Diagram, Data Sufficiency, Statement Conclusion'}
+    ],
+    years:[2024,2022,2021,2019,2016]
+  },
+  'RRB ALP': {
+    icon:'🚂', color:'#f472b6', qs:75, mins:60, neg:true, negVal:0.33, marks:1,
+    sections:[
+      {name:'Mathematics', q:20, color:'#fbbf24', topics:'Number System, BODMAS, Decimals, Fractions, LCM HCF, Ratio, Percentage, Mensuration, Time Work, Time Speed Distance, SI CI, Profit Loss, Algebra, Geometry, Trigonometry'},
+      {name:'General Intelligence & Reasoning', q:25, color:'#7c6fff', topics:'Analogy, Alphabetical Number Series, Coding Decoding, Mathematical Operations, Relationships, Syllogism, Jumbling, Venn Diagram, Data Interpretation, Directions'},
+      {name:'General Science', q:20, color:'#4ade80', topics:'Physics (Motion, Force, Work, Energy, Electricity, Magnetism, Light), Chemistry (Matter, Acids Bases, Metals, Carbon), Biology (Cells, Plants, Animals, Human Body)'},
+      {name:'General Awareness', q:10, color:'#fb923c', topics:'Current Affairs, Indian Culture, History, Geography, Polity, Sports, Awards, Science Technology'}
+    ],
+    years:[2024,2022,2018]
+  },
+  'RRB Group D': {
+    icon:'🔧', color:'#fb923c', qs:100, mins:90, neg:true, negVal:0.33, marks:1,
+    sections:[
+      {name:'Mathematics', q:25, color:'#fbbf24', topics:'Number System, Decimals, Fractions, LCM HCF, Ratio, Percentage, Mensuration, Time Work, Time Speed Distance, SI CI, Profit Loss, Elementary Algebra, Geometry, Trigonometry'},
+      {name:'General Intelligence & Reasoning', q:30, color:'#7c6fff', topics:'Analogy, Coding Decoding, Series, Blood Relation, Direction, Syllogism, Arrangement, Venn Diagram, Statement Argument'},
+      {name:'General Science', q:25, color:'#4ade80', topics:'Physics (Motion, Force, Work Power Energy, Heat, Light, Sound, Electricity), Chemistry (Matter, Chemical Reactions, Acids Bases Salts, Metals Non-metals), Biology (Life Processes, Control, Reproduction, Heredity, Environment)'},
+      {name:'General Awareness & Current Affairs', q:20, color:'#60a5fa', topics:'Indian History, Geography, Polity, Economy, Science Technology, Sports, Awards, Current Events 2024-25'}
+    ],
+    years:[2022,2018]
+  },
+  'RRB JE': {
+    icon:'⚙️', color:'#c084fc', qs:100, mins:90, neg:true, negVal:0.33, marks:1,
+    sections:[
+      {name:'Mathematics', q:30, color:'#fbbf24', topics:'Number System, Algebra, Mensuration, Trigonometry, Geometry, Statistics, Probability, LCM HCF, Ratio, Percentage, SI CI, Profit Loss, Time Work, Speed Distance'},
+      {name:'General Intelligence & Reasoning', q:25, color:'#7c6fff', topics:'Analogy, Series, Coding Decoding, Blood Relation, Direction, Syllogism, Venn Diagram, Matrix, Critical Thinking'},
+      {name:'General Awareness', q:15, color:'#4ade80', topics:'Current Affairs, History, Geography, Polity, Economy, Science Technology, Sports, Awards, Railways'},
+      {name:'General Science', q:30, color:'#fb923c', topics:'Physics, Chemistry, Biology, Environmental Science, Computer Basics, Engineering Fundamentals'}
+    ],
+    years:[2024,2019,2015]
   }
 };
 
 var curExam = 'SSC CGL';
+var curLang = 'en';
+function setLang(l){
+  curLang=l;
+  document.getElementById('lang-en').style.background=l==='en'?'rgba(255,255,255,.9)':'transparent';
+  document.getElementById('lang-en').style.color=l==='en'?'#333':'rgba(255,255,255,.7)';
+  document.getElementById('lang-hi').style.background=l==='hi'?'rgba(255,255,255,.9)':'transparent';
+  document.getElementById('lang-hi').style.color=l==='hi'?'#333':'rgba(255,255,255,.7)';
+  toast(l==='hi'?'Hindi mode ✅':'English mode ✅');
+}
 var TS = {qs:[],ans:{},skip:{},cur:0,left:0,tInt:null,exam:'',year:0,secs:[]};
 
 // ─── KEY MANAGEMENT ───
@@ -231,12 +295,23 @@ function checkKey(){
 
 // ─── HOME ───
 function renderExamTabs(){
+  var groups=[
+    {label:'SSC', exams:['SSC CGL','SSC CHSL','SSC GD']},
+    {label:'RRB', exams:['RRB NTPC UG','RRB NTPC 12th','RRB ALP','RRB Group D','RRB JE']},
+    {label:'Police', exams:['Bihar Police']}
+  ];
   var html='';
-  Object.keys(EXAMS).forEach(function(ex){
-    var e=EXAMS[ex];
-    html+='<button class="exam-tab'+(ex===curExam?' on':'')+'" data-ex="'+ex+'">'+e.icon+' '+ex+'</button>';
+  groups.forEach(function(g){
+    html+='<div style="flex-shrink:0"><div style="font-size:.52rem;color:var(--t2);font-weight:800;margin-bottom:4px;text-align:center">'+g.label+'</div><div style="display:flex;gap:5px">';
+    g.exams.forEach(function(ex){
+      var e=EXAMS[ex];
+      html+='<button class="exam-tab'+(ex===curExam?' on':'')+'" data-ex="'+ex+'">'+e.icon+' '+ex+'</button>';
+    });
+    html+='</div></div>';
   });
   document.getElementById('examTabs').innerHTML=html;
+  document.getElementById('examTabs').style.flexWrap='wrap';
+  document.getElementById('examTabs').style.gap='10px';
   document.getElementById('examTabs').addEventListener('click',function(ev){
     var btn=ev.target.closest('.exam-tab');
     if(!btn)return;
@@ -319,7 +394,7 @@ function loadAllSections(ex, year){
   var failed=0;
 
   ex.sections.forEach(function(sec,si){
-    var prompt='You are '+TS.exam+' exam expert. Generate exactly '+sec.q+' MCQ questions for '+TS.exam+' '+year+' exam, Section: "'+sec.name+'". Topics: '+sec.topics+'. Style must be EXACTLY like real '+TS.exam+' '+year+' PYQ paper - same difficulty, same format. '+(TS.exam==='Bihar Police'?'Write ALL text in Hindi Devanagari script only.':'Write in English.')+'Return ONLY JSON array: [{"q":"question?","opts":["(A) opt","(B) opt","(C) opt","(D) opt"],"ans":0,"sol":"brief explanation","sec":"'+sec.name+'"}]. ans=0-3. No markdown. Only JSON array.';
+    var prompt='You are '+TS.exam+' exam expert. Generate exactly '+sec.q+' MCQ questions for '+TS.exam+' '+year+' exam, Section: "'+sec.name+'". Topics: '+sec.topics+'. Style must be EXACTLY like real '+TS.exam+' '+year+' PYQ paper - same difficulty, same format. '+(curLang==='hi'||TS.exam==='Bihar Police'?'Write ALL questions, options and explanations in Hindi Devanagari script only.':'Write in English.')+'Return ONLY JSON array: [{"q":"question?","opts":["(A) opt","(B) opt","(C) opt","(D) opt"],"ans":0,"sol":"brief explanation","sec":"'+sec.name+'"}]. ans=0-3. No markdown. Only JSON array.';
 
     fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
