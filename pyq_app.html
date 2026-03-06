@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>PYQ Test Series</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#0f0f1a;--bg2:#1a1a2e;--cd:#16213e;--ac:#7c6fff;--a2:#ff6b8a;--t1:#e8e8f0;--t2:#8888aa;--br:#2a2a4a;--gr:#4ade80;--ye:#fbbf24;--re:#ff6b6b;}
+body{background:var(--bg);color:var(--t1);font-family:'Segoe UI',sans-serif;min-height:100vh;padding-bottom:30px;}
+.hdr{background:linear-gradient(135deg,var(--ac),var(--a2));padding:14px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:99;}
+.hdr-icon{font-size:1.6rem;}
+.hdr h1{font-size:1rem;font-weight:900;color:#fff;}
+.hdr p{font-size:.6rem;color:rgba(255,255,255,.8);}
+.key-bar{padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--br);display:flex;gap:8px;align-items:center;}
+.key-inp{flex:1;background:var(--cd);border:1px solid var(--br);border-radius:8px;color:var(--t1);font-size:.72rem;padding:7px 10px;font-family:inherit;outline:none;}
+.key-btn{background:var(--ac);border:none;border-radius:8px;color:#fff;font-size:.72rem;font-weight:800;padding:7px 14px;cursor:pointer;}
+.key-st{font-size:.62rem;color:var(--t2);}
+.wrap{padding:12px 14px;}
+/* Exam tabs */
+.exam-tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:2px;}
+.exam-tab{background:var(--bg2);border:2px solid var(--br);border-radius:10px;color:var(--t2);font-size:.72rem;font-weight:800;padding:8px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .2s;}
+.exam-tab.on{background:var(--ac);border-color:var(--ac);color:#fff;}
+/* Section info */
+.exam-info{background:var(--bg2);border:1px solid var(--br);border-radius:12px;padding:12px;margin-bottom:12px;}
+.exam-info-title{font-size:.9rem;font-weight:900;margin-bottom:8px;}
+.sec-row{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.sec-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.sec-name{font-size:.68rem;flex:1;}
+.sec-q{font-size:.68rem;font-weight:800;}
+.sec-bar-bg{flex:2;background:var(--br);border-radius:99px;height:4px;overflow:hidden;min-width:40px;}
+.sec-bar-fill{height:100%;border-radius:99px;}
+.info-stats{display:flex;gap:16px;margin-top:10px;padding-top:8px;border-top:1px solid var(--br);}
+.info-stat{text-align:center;}
+.info-stat-val{font-size:1rem;font-weight:900;}
+.info-stat-lbl{font-size:.52rem;color:var(--t2);}
+/* Year papers */
+.year-head{font-size:.75rem;font-weight:800;color:var(--t2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;}
+.paper-card{background:var(--bg2);border:1px solid var(--br);border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .2s;}
+.paper-card:active{border-color:var(--ac);background:var(--cd);}
+.paper-yr{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900;color:#fff;flex-shrink:0;}
+.paper-info{flex:1;}
+.paper-name{font-size:.8rem;font-weight:800;}
+.paper-meta{font-size:.6rem;color:var(--t2);margin-top:2px;}
+.paper-arr{color:var(--t2);font-size:1rem;}
+/* Test screen */
+.test-hdr{background:var(--bg2);border-bottom:1px solid var(--br);padding:10px 14px;position:sticky;top:0;z-index:10;}
+.test-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.test-title{font-size:.8rem;font-weight:800;}
+.timer{font-size:1rem;font-weight:900;color:var(--ye);font-variant-numeric:tabular-nums;}
+.timer.warn{color:var(--a2);}
+.timer.danger{color:var(--re);}
+.progress-bar{background:var(--br);border-radius:99px;height:4px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--ac);border-radius:99px;transition:width .3s;}
+.test-stats{display:flex;gap:12px;margin-top:4px;}
+.test-stat{font-size:.6rem;color:var(--t2);}
+/* Section banner */
+.sec-banner{padding:6px 14px;font-size:.65rem;font-weight:800;display:flex;align-items:center;gap:6px;}
+/* Question */
+.q-wrap{padding:12px 14px;}
+.q-num{font-size:.6rem;color:var(--t2);margin-bottom:4px;}
+.q-txt{font-size:.85rem;font-weight:700;line-height:1.5;margin-bottom:12px;}
+.opt{display:block;width:100%;background:var(--bg2);border:1.5px solid var(--br);border-radius:10px;color:var(--t1);font-size:.78rem;padding:10px 13px;margin-bottom:7px;cursor:pointer;text-align:left;font-family:inherit;transition:all .15s;}
+.opt:disabled{cursor:default;}
+.opt.c{background:rgba(74,222,128,.12);border-color:#4ade80;color:#4ade80;}
+.opt.w{background:rgba(255,107,107,.12);border-color:var(--re);color:var(--re);}
+.sol-box{background:var(--cd);border-left:3px solid var(--ac);border-radius:0 8px 8px 0;padding:10px 12px;margin-top:4px;}
+.sol-lbl{font-size:.6rem;font-weight:800;color:var(--ac);margin-bottom:3px;}
+.sol-txt{font-size:.72rem;color:var(--t2);line-height:1.5;}
+/* Nav */
+.q-nav{display:flex;flex-wrap:wrap;gap:5px;padding:10px 14px;}
+.qn{width:32px;height:32px;border-radius:7px;background:var(--bg2);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;cursor:pointer;}
+.qn.ans{background:rgba(74,222,128,.2);border-color:#4ade80;color:#4ade80;}
+.qn.skip{background:rgba(255,107,107,.1);border-color:var(--re);}
+.qn.cur{border-color:var(--ac);color:var(--ac);font-weight:900;}
+/* Nav buttons */
+.nav-btns{display:flex;gap:8px;padding:10px 14px;position:sticky;bottom:0;background:var(--bg);}
+.btn{background:var(--ac);border:none;border-radius:10px;color:#fff;font-size:.8rem;font-weight:800;padding:11px 0;cursor:pointer;flex:1;}
+.btn.sec{background:var(--bg2);border:1px solid var(--br);color:var(--t1);}
+.btn.red{background:var(--re);}
+/* Result */
+.result-wrap{padding:16px 14px;}
+.result-score{background:linear-gradient(135deg,var(--ac),var(--a2));border-radius:16px;padding:20px;text-align:center;margin-bottom:14px;}
+.result-pct{font-size:3rem;font-weight:900;color:#fff;}
+.result-lbl{font-size:.75rem;color:rgba(255,255,255,.8);}
+.result-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.rs{background:var(--bg2);border-radius:10px;padding:10px;text-align:center;}
+.rs-val{font-size:1.2rem;font-weight:900;}
+.rs-lbl{font-size:.55rem;color:var(--t2);}
+.sec-result{background:var(--bg2);border-radius:10px;padding:10px 12px;margin-bottom:6px;}
+.sec-res-name{font-size:.72rem;font-weight:800;margin-bottom:4px;}
+.sec-res-bar{background:var(--br);border-radius:99px;height:6px;overflow:hidden;margin-bottom:3px;}
+.sec-res-fill{height:100%;border-radius:99px;transition:width 1s;}
+.sec-res-stat{font-size:.6rem;color:var(--t2);}
+/* Loading */
+.loading{text-align:center;padding:40px 20px;}
+.load-icon{font-size:2.5rem;margin-bottom:10px;}
+.load-txt{font-size:.85rem;font-weight:800;color:var(--ac);}
+.load-sub{font-size:.7rem;color:var(--t2);margin-top:5px;}
+.load-bar{background:var(--br);border-radius:99px;height:6px;overflow:hidden;margin:12px auto;max-width:200px;}
+.load-fill{height:100%;background:linear-gradient(90deg,var(--ac),var(--a2));border-radius:99px;animation:ld 1.5s ease-in-out infinite;}
+@keyframes ld{0%{width:0%}50%{width:80%}100%{width:100%}}
+/* Empty */
+.empty{text-align:center;padding:30px;color:var(--t2);font-size:.8rem;}
+/* Toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:8px 18px;border-radius:99px;font-size:.75rem;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-icon">📝</div>
+  <div>
+    <h1>PYQ Test Series</h1>
+    <p>SSC CGL • CHSL • GD • Bihar Police</p>
+  </div>
+</div>
+
+<div class="key-bar">
+  <input class="key-inp" id="keyInp" type="password" placeholder="Groq API Key (gsk_...)">
+  <button class="key-btn" onclick="saveKey()">Save</button>
+  <span class="key-st" id="keySt">❌ Key nahi</span>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- HOME VIEW -->
+<div id="homeView" class="wrap">
+  <div class="exam-tabs" id="examTabs"></div>
+  <div id="examInfoBox"></div>
+  <div class="year-head">📅 Year-wise Papers</div>
+  <div id="paperList"></div>
+</div>
+
+<!-- TEST VIEW -->
+<div id="testView" style="display:none">
+  <div class="test-hdr">
+    <div class="test-top">
+      <div class="test-title" id="testTitle"></div>
+      <div class="timer" id="timerEl">--:--</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+    <div class="test-stats">
+      <span class="test-stat" id="statQ">Q 0/0</span>
+      <span class="test-stat" id="statA">✅ 0</span>
+      <span class="test-stat" id="statS">⏭️ 0</span>
+    </div>
+  </div>
+  <div class="sec-banner" id="secBanner"></div>
+  <div class="q-wrap" id="qWrap"></div>
+  <div class="q-nav" id="qNav"></div>
+  <div class="nav-btns">
+    <button class="btn sec" onclick="prevQ()">◀ Prev</button>
+    <button class="btn sec" onclick="skipQ()">⏭ Skip</button>
+    <button class="btn sec" onclick="nextQ()">Next ▶</button>
+    <button class="btn red" onclick="confirmSubmit()">Submit</button>
+  </div>
+</div>
+
+<!-- RESULT VIEW -->
+<div id="resultView" style="display:none" class="result-wrap">
+  <div id="resultContent"></div>
+  <button class="btn" style="width:100%;margin-top:10px" onclick="showHome()">🏠 Home</button>
+</div>
+
+<script>
+// ─── EXAM DEFINITIONS ───
+var EXAMS = {
+  'SSC CGL': {
+    icon:'🎯', color:'#7c6fff', qs:100, mins:60, neg:true, negVal:0.5, marks:2,
+    sections:[
+      {name:'General Intelligence & Reasoning', q:25, color:'#7c6fff', topics:'Analogy, Coding-Decoding, Series, Puzzle, Blood Relation, Direction, Syllogism, Matrix, Venn Diagram, Statement Conclusion'},
+      {name:'General Awareness (GK)', q:25, color:'#4ade80', topics:'History, Geography, Polity, Economy, Science, Current Affairs, Static GK, Awards, Books, Sports'},
+      {name:'Quantitative Aptitude', q:25, color:'#fbbf24', topics:'Number System, Percentage, Profit Loss, SI CI, Time Work, Time Speed Distance, Algebra, Geometry, Trigonometry, DI'},
+      {name:'English Comprehension', q:25, color:'#60a5fa', topics:'Reading Comprehension, Cloze Test, Error Spotting, Fill in Blanks, Synonyms, Antonyms, Idioms, One Word Substitution'}
+    ],
+    years:[2024,2023,2022,2021,2020,2019,2018]
+  },
+  'SSC CHSL': {
+    icon:'📋', color:'#ff6b8a', qs:100, mins:60, neg:true, negVal:0.5, marks:2,
+    sections:[
+      {name:'General Intelligence', q:25, color:'#7c6fff', topics:'Reasoning, Series, Analogy, Coding, Blood Relation, Direction, Syllogism'},
+      {name:'General Awareness', q:25, color:'#4ade80', topics:'History, Polity, Geography, Science, Current Affairs, Sports, Awards, Static GK'},
+      {name:'Quantitative Aptitude', q:25, color:'#fbbf24', topics:'Arithmetic, Algebra, Geometry, Percentage, Profit Loss, Time Work, Speed Distance'},
+      {name:'English Language', q:25, color:'#60a5fa', topics:'Grammar, Vocabulary, Comprehension, Error Spotting, Fill Blanks, Synonyms Antonyms'}
+    ],
+    years:[2024,2023,2022,2021,2020,2019]
+  },
+  'SSC GD': {
+    icon:'🛡️', color:'#fb923c', qs:80, mins:60, neg:true, negVal:0.5, marks:2,
+    sections:[
+      {name:'General Intelligence & Reasoning', q:20, color:'#7c6fff', topics:'Analogy, Coding, Series, Odd One Out, Blood Relation, Direction, Arrangement'},
+      {name:'General Knowledge & Awareness', q:20, color:'#4ade80', topics:'History, Geography, Polity, Science, Sports, Awards, Current Affairs, Indian Culture'},
+      {name:'Elementary Mathematics', q:20, color:'#fbbf24', topics:'Number System, Percentage, Ratio, SI CI, Profit Loss, Time Work, Measurement, Average'},
+      {name:'English / Hindi', q:20, color:'#60a5fa', topics:'Fill Blanks, Error Spotting, Synonyms, Antonyms, One Word, Idioms, Hindi Grammar, Vocabulary'}
+    ],
+    years:[2024,2023,2022,2021,2019,2018]
+  },
+  'Bihar Police': {
+    icon:'👮', color:'#a3e635', qs:100, mins:120, neg:false, marks:1,
+    sections:[
+      {name:'सामान्य ज्ञान (GK)', q:50, color:'#7c6fff', topics:'History of India and Bihar, Geography, Polity, Economy, Science, Sports, Awards, Bihar GK, Culture'},
+      {name:'विज्ञान (Science)', q:25, color:'#4ade80', topics:'Physics, Chemistry, Biology, Environment, Health, Technology, Space Science'},
+      {name:'हिंदी (Hindi)', q:15, color:'#fbbf24', topics:'Grammar, Sandhi, Samas, Fill Blanks, Error Correction, Vocabulary, Synonyms Antonyms'},
+      {name:'गणित (Mathematics)', q:7, color:'#60a5fa', topics:'Number System, Percentage, Profit Loss, Time Work, Speed Distance, Average, SI CI'},
+      {name:'करेंट अफेयर्स', q:3, color:'#fb923c', topics:'Current Events India World, Sports, Awards 2024-25'}
+    ],
+    years:[2024,2023,2022,2021,2019,2017,2014]
+  }
+};
+
+var curExam = 'SSC CGL';
+var TS = {qs:[],ans:{},skip:{},cur:0,left:0,tInt:null,exam:'',year:0,secs:[]};
+
+// ─── KEY MANAGEMENT ───
+function saveKey(){
+  var k=document.getElementById('keyInp').value.trim();
+  if(!k){toast('Key daalo!');return;}
+  localStorage.setItem('pyq_key',k);
+  checkKey();
+  toast('Key saved! ✅');
+}
+function getKey(){return localStorage.getItem('pyq_key')||'';}
+function checkKey(){
+  var k=getKey();
+  var st=document.getElementById('keySt');
+  var inp=document.getElementById('keyInp');
+  if(k){st.textContent='✅ Ready';st.style.color='#4ade80';if(inp)inp.value=k.substring(0,8)+'...';}
+  else{st.textContent='❌ Key nahi';st.style.color='var(--re)';}
+}
+
+// ─── HOME ───
+function renderExamTabs(){
+  var html='';
+  Object.keys(EXAMS).forEach(function(ex){
+    var e=EXAMS[ex];
+    html+='<button class="exam-tab'+(ex===curExam?' on':'')+'" data-ex="'+ex+'">'+e.icon+' '+ex+'</button>';
+  });
+  document.getElementById('examTabs').innerHTML=html;
+  document.getElementById('examTabs').addEventListener('click',function(ev){
+    var btn=ev.target.closest('.exam-tab');
+    if(!btn)return;
+    curExam=btn.dataset.ex;
+    document.querySelectorAll('.exam-tab').forEach(function(b){b.className='exam-tab';});
+    btn.className='exam-tab on';
+    renderExamInfo();
+    renderPapers();
+  });
+}
+
+function renderExamInfo(){
+  var ex=EXAMS[curExam];
+  var secHtml='';
+  ex.sections.forEach(function(s){
+    var pct=Math.round((s.q/ex.qs)*100);
+    secHtml+='<div class="sec-row">'
+      +'<div class="sec-dot" style="background:'+s.color+'"></div>'
+      +'<div class="sec-name">'+s.name+'</div>'
+      +'<div class="sec-q" style="color:'+s.color+'">'+s.q+'Q</div>'
+      +'<div class="sec-bar-bg"><div class="sec-bar-fill" style="width:'+pct+'%;background:'+s.color+'"></div></div>'
+      +'</div>';
+  });
+  document.getElementById('examInfoBox').innerHTML=
+    '<div class="exam-info">'
+    +'<div class="exam-info-title">'+ex.icon+' '+curExam+'</div>'
+    +secHtml
+    +'<div class="info-stats">'
+    +'<div class="info-stat"><div class="info-stat-val" style="color:var(--ac)">'+ex.qs+'</div><div class="info-stat-lbl">Questions</div></div>'
+    +'<div class="info-stat"><div class="info-stat-val" style="color:var(--ye)">'+ex.mins+'</div><div class="info-stat-lbl">Minutes</div></div>'
+    +'<div class="info-stat"><div class="info-stat-val" style="color:'+(ex.neg?'var(--re)':'var(--gr)')+'">'+( ex.neg?'-'+ex.negVal:'No')+'</div><div class="info-stat-lbl">Negative</div></div>'
+    +'<div class="info-stat"><div class="info-stat-val" style="color:var(--gr)">'+ex.marks+'</div><div class="info-stat-lbl">Marks/Q</div></div>'
+    +'</div></div>';
+}
+
+function renderPapers(){
+  var ex=EXAMS[curExam];
+  var colors=['#7c6fff','#ff6b8a','#fb923c','#fbbf24','#4ade80','#60a5fa','#c084fc'];
+  var html='';
+  ex.years.forEach(function(yr,i){
+    var c=colors[i%colors.length];
+    html+='<div class="paper-card" data-yr="'+yr+'">'
+      +'<div class="paper-yr" style="background:'+c+'">'+yr+'</div>'
+      +'<div class="paper-info">'
+      +'<div class="paper-name">'+curExam+' '+yr+' Paper</div>'
+      +'<div class="paper-meta">'+ex.qs+' Questions • '+ex.mins+' Min • '+(ex.neg?'Negative Marking':'No Negative')+'</div>'
+      +'</div>'
+      +'<div class="paper-arr">›</div>'
+      +'</div>';
+  });
+  document.getElementById('paperList').innerHTML=html;
+  document.getElementById('paperList').addEventListener('click',function(ev){
+    var card=ev.target.closest('.paper-card');
+    if(!card)return;
+    startTest(curExam,parseInt(card.dataset.yr));
+  });
+}
+
+// ─── START TEST ───
+function startTest(examName, year){
+  if(!getKey()){toast('Pehle Groq key daalo!');return;}
+  var ex=EXAMS[examName];
+  TS={qs:[],ans:{},skip:{},cur:0,left:ex.mins*60,tInt:null,exam:examName,year:year,secs:ex.sections,loaded:false};
+  document.getElementById('homeView').style.display='none';
+  document.getElementById('resultView').style.display='none';
+  document.getElementById('testView').style.display='block';
+  document.getElementById('testTitle').textContent=examName+' '+year;
+  document.getElementById('qWrap').innerHTML='';
+  document.getElementById('qNav').innerHTML='';
+
+  // Show loading
+  document.getElementById('qWrap').innerHTML='<div class="loading"><div class="load-icon">🤖</div><div class="load-txt">AI Questions Generate Ho Rahi Hain...</div><div class="load-sub">'+examName+' '+year+' PYQ Style</div><div class="load-bar"><div class="load-fill"></div></div><div class="load-sub" style="margin-top:8px">'+ex.qs+' questions • Sections: '+ex.sections.length+'</div></div>';
+
+  loadAllSections(ex, year);
+}
+
+function loadAllSections(ex, year){
+  var allQs=[];
+  var pending=ex.sections.length;
+  var failed=0;
+
+  ex.sections.forEach(function(sec,si){
+    var prompt='You are '+TS.exam+' exam expert. Generate exactly '+sec.q+' MCQ questions for '+TS.exam+' '+year+' exam, Section: "'+sec.name+'". Topics: '+sec.topics+'. Style must be EXACTLY like real '+TS.exam+' '+year+' PYQ paper - same difficulty, same format. '+(TS.exam==='Bihar Police'?'Write ALL text in Hindi Devanagari script only.':'Write in English.')+'Return ONLY JSON array: [{"q":"question?","opts":["(A) opt","(B) opt","(C) opt","(D) opt"],"ans":0,"sol":"brief explanation","sec":"'+sec.name+'"}]. ans=0-3. No markdown. Only JSON array.';
+
+    fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+getKey()},
+      body:JSON.stringify({
+        model:'llama-3.3-70b-versatile',
+        messages:[
+          {role:'system',content:'You are a JSON generator for competitive exams. Return only valid JSON array. No markdown. No extra text.'},
+          {role:'user',content:prompt}
+        ],
+        max_tokens:4000,
+        temperature:0.5
+      })
+    })
+    .then(function(r){
+      if(r.status===429) throw new Error('Rate limit');
+      return r.json();
+    })
+    .then(function(data){
+      if(data.error) throw new Error(data.error.message);
+      var txt=data.choices[0].message.content;
+      txt=txt.replace(/```json/gi,'').replace(/```/g,'').trim();
+      // Smart parse - extract valid objects
+      var arr=safeParseArr(txt);
+      if(!arr.length) throw new Error('No questions');
+      arr=arr.slice(0,sec.q);
+      arr.forEach(function(q){q.secIdx=si;q.secColor=sec.color;q.secName=sec.name;});
+      allQs=allQs.concat(arr);
+      pending--;
+      updateLoadProgress(ex.sections.length-pending, ex.sections.length, sec.name);
+      if(pending===0) launchTest(allQs, ex);
+    })
+    .catch(function(e){
+      console.log('Section error:',sec.name, e.message);
+      failed++;
+      pending--;
+      // Add placeholder for failed section
+      for(var i=0;i<sec.q;i++){
+        allQs.push({q:'['+sec.name+'] Question '+(i+1),opts:['(A) Loading...','(B) Error','(C) Retry','(D) Skip'],ans:0,sol:'AI error: '+e.message,sec:sec.name,secIdx:si,secColor:sec.color,secName:sec.name});
+      }
+      if(pending===0) launchTest(allQs, ex);
+    });
+  });
+}
+
+function safeParseArr(txt){
+  var s=txt.indexOf('[');
+  if(s===-1)return [];
+  try{
+    var e=txt.lastIndexOf(']');
+    return JSON.parse(txt.substring(s,e+1));
+  }catch(ex){
+    // Extract partial valid objects
+    var objs=[];
+    var partial=txt.substring(s);
+    var depth=0,start=-1,inStr=false,esc=false;
+    for(var i=0;i<partial.length;i++){
+      var c=partial[i];
+      if(esc){esc=false;continue;}
+      if(c==='\\'&&inStr){esc=true;continue;}
+      if(c==='"'){inStr=!inStr;continue;}
+      if(inStr)continue;
+      if(c==='{'){if(depth===0)start=i;depth++;}
+      else if(c==='}'){depth--;if(depth===0&&start>=0){try{objs.push(JSON.parse(partial.substring(start,i+1)));}catch(e2){}start=-1;}}
+    }
+    return objs;
+  }
+}
+
+function updateLoadProgress(done, total, secName){
+  var pct=Math.round((done/total)*100);
+  document.getElementById('qWrap').innerHTML='<div class="loading"><div class="load-icon">🤖</div><div class="load-txt">AI Questions Generate Ho Rahi Hain...</div><div class="load-sub">Section '+done+'/'+total+' complete: '+secName+'</div><div class="load-bar"><div class="load-fill" style="animation:none;width:'+pct+'%"></div></div><div class="load-sub" style="margin-top:8px;color:var(--gr)">'+pct+'% done</div></div>';
+}
+
+function launchTest(qs, ex){
+  TS.qs=qs;
+  TS.left=ex.mins*60;
+  clearInterval(TS.tInt);
+  TS.tInt=setInterval(function(){
+    TS.left--;
+    var m=Math.floor(TS.left/60),s=TS.left%60;
+    var el=document.getElementById('timerEl');
+    if(el){
+      el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+      el.className='timer'+(TS.left<60?' danger':TS.left<300?' warn':'');
+    }
+    if(TS.left<=0){clearInterval(TS.tInt);showResult();}
+  },1000);
+  renderQ();
+  toast('✅ '+qs.length+' questions ready!');
+}
+
+// ─── RENDER QUESTION ───
+function renderQ(){
+  var q=TS.qs[TS.cur];
+  if(!q)return;
+  var total=TS.qs.length;
+  var done=Object.keys(TS.ans).length;
+  document.getElementById('progFill').style.width=(done/total*100)+'%';
+  document.getElementById('statQ').textContent='Q '+(TS.cur+1)+'/'+total;
+  document.getElementById('statA').textContent='✅ '+done;
+  document.getElementById('statS').textContent='⏭️ '+Object.keys(TS.skip).length;
+
+  // Section banner
+  var sb=document.getElementById('secBanner');
+  sb.style.background=q.secColor+'22';
+  sb.style.color=q.secColor;
+  sb.innerHTML='<div style="width:6px;height:6px;border-radius:50%;background:'+q.secColor+'"></div>'+q.secName;
+
+  // Solution if answered
+  var answered=TS.ans[TS.cur]!==undefined;
+  var solHtml='';
+  if(answered&&q.sol){
+    var isRight=TS.ans[TS.cur]===q.ans;
+    solHtml='<div class="sol-box" style="border-color:'+(isRight?'#4ade80':'var(--re)')+'"><div class="sol-lbl" style="color:'+(isRight?'#4ade80':'var(--re)')+'">'+( isRight?'✅ Correct!':'❌ Wrong! Sahi: '+q.opts[q.ans])+'</div><div class="sol-txt">'+esc(q.sol||'')+'</div></div>';
+  }
+
+  document.getElementById('qWrap').innerHTML=
+    '<div class="q-num">Q'+(TS.cur+1)+' of '+total+'</div>'
+    +'<div class="q-txt">'+esc(q.q||'')+'</div>'
+    +(q.opts||[]).map(function(o,i){
+      var cls='opt';
+      if(answered){
+        if(i===q.ans)cls='opt c';
+        else if(i===TS.ans[TS.cur])cls='opt w';
+      }
+      return '<button class="'+cls+'" onclick="ansQ('+i+')" '+(answered?'disabled':'')+'>'+esc(o||'')+'</button>';
+    }).join('')
+    +solHtml;
+
+  // Nav dots
+  document.getElementById('qNav').innerHTML=TS.qs.map(function(_,i){
+    var q2=TS.qs[i];
+    var cls='qn';
+    if(TS.ans[i]!==undefined)cls+=' ans';
+    else if(TS.skip[i])cls+=' skip';
+    if(i===TS.cur)cls+=' cur';
+    return '<div class="'+cls+'" style="border-top:2px solid '+( q2?q2.secColor:'var(--br)')+'" onclick="goQ('+i+')">'+(i+1)+'</div>';
+  }).join('');
+}
+
+function ansQ(oi){
+  if(TS.ans[TS.cur]!==undefined)return;
+  TS.ans[TS.cur]=oi;
+  delete TS.skip[TS.cur];
+  renderQ();
+  setTimeout(function(){if(TS.cur<TS.qs.length-1){TS.cur++;renderQ();}},900);
+}
+function nextQ(){if(TS.cur<TS.qs.length-1){TS.cur++;renderQ();}}
+function prevQ(){if(TS.cur>0){TS.cur--;renderQ();}}
+function skipQ(){TS.skip[TS.cur]=true;if(TS.cur<TS.qs.length-1){TS.cur++;renderQ();}}
+function goQ(i){TS.cur=i;renderQ();}
+function confirmSubmit(){if(confirm('Submit karo? '+(TS.qs.length-Object.keys(TS.ans).length)+' unanswered hain.')){clearInterval(TS.tInt);showResult();}}
+
+// ─── RESULT ───
+function showResult(){
+  clearInterval(TS.tInt);
+  var ex=EXAMS[TS.exam];
+  var total=TS.qs.length;
+  var correct=0,wrong=0,skipped=0;
+  var marks=0;
+  TS.qs.forEach(function(q,i){
+    if(TS.ans[i]===undefined){skipped++;return;}
+    if(TS.ans[i]===q.ans){correct++;marks+=ex.marks;}
+    else{wrong++;if(ex.neg)marks-=ex.negVal;}
+  });
+  var pct=Math.round((correct/total)*100);
+  var maxMarks=total*ex.marks;
+
+  // Section-wise result
+  var secResults={};
+  TS.secs.forEach(function(s,si){
+    secResults[si]={name:s.name,color:s.color,total:0,correct:0};
+  });
+  TS.qs.forEach(function(q,i){
+    var si=q.secIdx||0;
+    if(secResults[si]){
+      secResults[si].total++;
+      if(TS.ans[i]===q.ans)secResults[si].correct++;
+    }
+  });
+
+  var secHtml='<div style="font-size:.75rem;font-weight:800;margin-bottom:8px">📊 Section-wise Result</div>';
+  Object.values(secResults).forEach(function(s){
+    if(!s.total)return;
+    var sp=Math.round((s.correct/s.total)*100);
+    secHtml+='<div class="sec-result">'
+      +'<div class="sec-res-name" style="color:'+s.color+'">'+s.name+'</div>'
+      +'<div class="sec-res-bar"><div class="sec-res-fill" style="width:'+sp+'%;background:'+s.color+'"></div></div>'
+      +'<div class="sec-res-stat">'+s.correct+'/'+s.total+' correct ('+sp+'%)</div>'
+      +'</div>';
+  });
+
+  document.getElementById('resultContent').innerHTML=
+    '<div class="result-score">'
+    +'<div class="result-pct">'+pct+'%</div>'
+    +'<div class="result-lbl">'+TS.exam+' '+TS.year+' • Score: '+Math.max(0,marks).toFixed(1)+'/'+maxMarks+'</div>'
+    +'</div>'
+    +'<div class="result-stats">'
+    +'<div class="rs"><div class="rs-val" style="color:var(--gr)">'+correct+'</div><div class="rs-lbl">Correct</div></div>'
+    +'<div class="rs"><div class="rs-val" style="color:var(--re)">'+wrong+'</div><div class="rs-lbl">Wrong</div></div>'
+    +'<div class="rs"><div class="rs-val" style="color:var(--ye)">'+skipped+'</div><div class="rs-lbl">Skipped</div></div>'
+    +'</div>'
+    +secHtml;
+
+  document.getElementById('testView').style.display='none';
+  document.getElementById('resultView').style.display='block';
+}
+
+function showHome(){
+  document.getElementById('resultView').style.display='none';
+  document.getElementById('testView').style.display='none';
+  document.getElementById('homeView').style.display='block';
+}
+
+// ─── UTILS ───
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.style.opacity='1';setTimeout(function(){t.style.opacity='0';},2500);}
+
+// ─── INIT ───
+window.onload=function(){
+  checkKey();
+  renderExamTabs();
+  renderExamInfo();
+  renderPapers();
+};
+</script>
+</body>
+</html>
